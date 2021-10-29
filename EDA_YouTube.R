@@ -39,3 +39,11 @@ View(data.frame(df_raw$publishedAt,df_raw$trending_date,df_raw$days_from_publish
 
 sort(unique(df_raw$categoryId))
 
+###II. add the category name column by matching with the category IDs
+
+df_categoryName=read.csv("YouTube_categoryID.csv")
+df_categoryName
+
+df_raw=left_join(df_raw,df_categoryName,by="categoryId")
+
+View(df_raw)
