@@ -60,4 +60,23 @@ unique(zero_view_videos$video_id)
 df_raw=df_raw%>%filter(view_count!=0)
 
 df_raw_copy=df_raw #saving a copy as backup
+### Identify numerical and categorical variables
+
+cols_list=colnames(df_raw)
+cols_list
+
+str(df_raw)
+
+num_cols=c("view_count","likes","dislikes",
+           "comment_count","days_from_published_to_trending")
+
+cat_cols=c("video_id","title","channelId","channelTitle",
+           "categoryId","tags","thumbnail_link","comments_disabled",
+           "ratings_disabled","description","categoryName")
+
+datetime_cols=c("publishedAt","trending_date")
+
+summary(df_raw)
+# check the descriptive statics of each column in the df 
+
 
