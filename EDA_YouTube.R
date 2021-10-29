@@ -80,3 +80,46 @@ summary(df_raw)
 # check the descriptive statics of each column in the df 
 
 
+###EDA
+
+dim(df_raw)
+#check the dimension/shape of the df
+
+View(df_raw)
+
+##If a video makes it to the trending video list on a particular day, 
+##there is an entry about that video in the dataframe for that particular day. 
+##The same videos can be a trending videos for consecutive days. 
+##To avoid over-counting, let's make a dataframe which contains only unique videos, 
+## and we are only keeping the most recent entry when that video on the trending video list
+
+
+##In order to keep the most recent entry for each video, 
+##that video is supposed to have the same video 
+df_unique_video=df_raw%>%group_by(video_id)%>%
+  summarise(title=last(title),publishedAt=last(publishedAt),channelId = last(channelId),
+            last_trending_date = last(trending_date),
+            channelTitle=last(channelTitle),
+            categoryId=last(categoryId),
+            categoryName=last(categoryName),
+            tags=last(tags),
+            view_count=last(view_count),
+            likes=last(likes),
+            dislikes=last(dislikes),
+            comment_count=last(comment_count),
+            thumbnail_link=last(thumbnail_link),
+            comments_disabled=last(comments_disabled),
+            ratings_disabled=last(ratings_disabled),
+            description=last(description),
+            days_from_published_to_trending=last(days_from_published_to_trending))
+View(df_unique_video)
+
+##checking to make sure the newly created df contains only unique video IDs
+unique(duplicated(df_unique_video$video_id))
+
+dim(df_raw)#
+#There're 89146 entries of trending videos.
+#Some entries were for the same videos because some videos were trending videos on consecutive days 
+dim(df_unique_video)
+#looks like there're only 15,488 unique videos in the dataset
+
