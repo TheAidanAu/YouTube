@@ -178,4 +178,36 @@ View(df_raw)
 View(df_unique_video)
 
 #Pareto Chart of Views vs Videos
-View(df_unique_video%>%arrange(desc(view_count)))
+df_pareto=df_unique_video%>%arrange(desc(view_count))%>%mutate(cum_view = cumsum(as.numeric(view_count)),total_view=sum(view_count),percent_view=cum_view/total_view,ranking=row_number(),total_num_video=n(),percent_video=ranking/total_num_video)
+View(df_pareto)
+#View(df_pareto%>%select(view_count,cum_view))
+
+#This follow chart shows the number of views from the top xx percentage of most watched videos
+ggplot(
+  data = df_pareto, 
+  aes(x = percent_video , y = view_count/1000000)
+  )+geom_line(color='#FF0000')+
+  geom_ribbon(
+    data=df_pareto,
+    aes(x =percent_video,ymin=0,ymax= view_count/1000000),
+    fill="#FF0000",colour=NA,alpha=0.7)+
+  scale_x_continuous(labels = scales::percent)+
+  labs(title="Views vs Percentage of Most Watched Videos", 
+       x ="Top Percentage of Most Watched Trending Videos", 
+       y = "Number of Views (in Millions)")
+#It looks like even the top 1% of most watched videos account for a substantial amount of views. 
+#Let's do a Pareto chart instead 
+
+#Plotting a Pareto chart
+ggplot(data = df_pareto, 
+       aes(x =percent_video , y = percent_view)
+)+
+  geom_line(color='#FF0000')+
+  scale_x_continuous(breaks = seq(0, 1, 0.1),labels = scales::percent)+
+  scale_y_continuous(breaks = seq(0, 1, 0.1),labels = scales::percent)+
+  labs(title="Pareto Chart of Views vs Trending Videos \n What does the Top x% of Most Watched Trending Videos Account for y% of the Total Views?", 
+       x ="Top Percentage of Most Watched Trending Videos", 
+       y = "Percent of Total Views")+
+  theme(panel.background = element_rect(fill = 'white'),
+        panel.grid.major = element_line(color = 'grey'),
+        panel.grid.minor = element_line(color = 'grey'))
