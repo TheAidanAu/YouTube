@@ -47,3 +47,15 @@ df_categoryName
 df_raw=left_join(df_raw,df_categoryName,by="categoryId")
 
 View(df_raw)
+
+
+#Looks like there're 11 uniqle videos with zero view count. 
+#I looked at each of them individually. They're all promotional videos of YouTube/Google
+View(df_raw%>%filter(view_count==0))
+zero_view_videos=df_raw%>%filter(view_count==0)
+View(zero_view_videos)
+unique(zero_view_videos$video_id)
+
+#For our analysis purposes, these zero-viewed videos will be excluded 
+df_raw=df_raw%>%filter(view_count!=0)
+
