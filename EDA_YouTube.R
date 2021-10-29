@@ -123,3 +123,30 @@ dim(df_raw)#
 dim(df_unique_video)
 #looks like there're only 15,488 unique videos in the dataset
 
+###Correlation Matrix
+###Correlation tells us how strong the relationship is
+
+#Pick only the numeric columns from the unique video df for correlation analysis 
+df_numeric=df_unique_video%>%
+  select(view_count,likes,dislikes,
+         comment_count,days_from_published_to_trending) 
+
+#install.packages("corrplot")
+library(corrplot)
+df_numeric_corr = cor(df_numeric)
+
+####What features correlate the most with the number of views or other features? 
+corrplot(df_numeric_corr, method = 'number')
+#Looks like there's a high correlation 
+# between the number views and the number of likes (corr=0.86), 
+# as well as the number of dislikes (corr=0.70)
+# and just a little bit with the comment count (corr=0.62)
+
+#Find the p-value for the correlation 
+# between the above-mentioned features
+cor.test(df_numeric$view_count,df_numeric$likes)
+#p-value < 2.2e-16, strong certainty in the result
+cor.test(df_numeric$view_count,df_numeric$dislikes)
+#p-value < 2.2e-16, strong certainty in the result
+cor.test(df_numeric$view_count,df_numeric$comment_count)
+#p-value < 2.2e-16, strong certainty in the result
