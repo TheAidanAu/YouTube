@@ -155,7 +155,7 @@ cor.test(df_numeric$view_count,df_numeric$comment_count)
 #Scatter plot 
 ggplot(data=df_numeric,aes(x=likes,y=view_count))+geom_point()+geom_smooth(formula = y ~ x, method = "lm")+labs(title="Views vs Likes of Trending Videos \n r=0.86, p-value<2.2e-16 → Strong Certainty in the relationship", x ="Number of Likes (Log Scale)", y = "Number of Views (Log Scale)")+scale_x_log10()+scale_y_log10()
 ggplot(data=df_numeric,aes(x=dislikes,y=view_count))+geom_point()+geom_smooth(formula = y ~ x, method = "lm")+labs(title="Views vs Dislikes of Trending Videos \n r=0.70, p-value<2.2e-16 → Strong Certainty in the relationship", x ="Number of Dislikes (Log Scale)", y = "Number of Views (Log Scale)")+scale_x_log10()+scale_y_log10()
-ggplot(data=df_numeric,aes(x=dislikes,y=comment_count))+geom_point()+geom_smooth(formula = y ~ x, method = "lm")+labs(title="Views vs Comments of Trending Videos \n r=0.62, p-value<2.2e-16 → Strong Certainty in the relationship", x ="Number of Comments (Log Scale)", y = "Number of Views (Log Scale)")+scale_x_log10()+scale_y_log10()
+ggplot(data=df_numeric,aes(x=comment_count,y=view_count))+geom_point()+geom_smooth(formula = y ~ x, method = "lm")+labs(title="Views vs Comments of Trending Videos \n r=0.62, p-value<2.2e-16 → Strong Certainty in the relationship", x ="Number of Comments (Log Scale)", y = "Number of Views (Log Scale)")+scale_x_log10()+scale_y_log10()
 
 ##Histogram of number of days trended
 ggplot(data=df_unique_video,aes(x=days_from_published_to_trending))+geom_bar(aes(y = (..count..)/sum(..count..)))+scale_y_continuous(labels = scales::percent)+coord_cartesian(xlim = c(0,20))+labs(title="Distribution of Duration of Videos Staying Trending \n How many days have videos stayed on the Trending List?", x ="Number of Consecutive Days Since First Trending", y = "Percentage of All Trending Videos")
@@ -172,7 +172,7 @@ ggplot(data = df_unique_video, aes(x = categoryName, y = view_count/1000000))+ge
 ggplot(data = df_unique_video, aes(x = categoryName, y = likes/1000000))+geom_boxplot()+coord_flip(ylim=c(0,0.4))+labs(title="Number of Likes by Categories", x ="Categories", y = "Number of Likes (in Millions)")
 ggplot(data = df_unique_video, aes(x = categoryName, y = dislikes))+geom_boxplot()+coord_flip(ylim=c(0,5000))+labs(title="Number of Dislikes by Categories", x ="Categories", y = "Number of Dislikes")
 ggplot(data = df_unique_video, aes(x = categoryName, y = comment_count))+coord_flip()+geom_boxplot()+coord_flip(ylim=c(0,20000))+labs(title="Number of Comments by Categories", x ="Categories", y = "Number of Comments")
-ggplot(data = df_unique_video, aes(x = categoryName, y = days_from_published_to_trending))+geom_boxplot()+coord_flip()
+ggplot(data = df_unique_video, aes(x = categoryName, y = days_from_published_to_trending))+geom_boxplot()+coord_flip()+labs(title="Number of Consecutive Days Since First Trending by Categories", x ="Categories", y = "Number of Consecutive Days Since First Trending")
 
 View(df_raw)
 View(df_unique_video)
