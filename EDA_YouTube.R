@@ -150,3 +150,9 @@ cor.test(df_numeric$view_count,df_numeric$dislikes)
 #p-value < 2.2e-16, strong certainty in the result
 cor.test(df_numeric$view_count,df_numeric$comment_count)
 #p-value < 2.2e-16, strong certainty in the result
+
+##Graphical Analysis 
+#Scatter plot 
+ggplot(data=df_numeric,aes(x=likes,y=view_count))+geom_point()+geom_smooth(formula = y ~ x, method = "lm")+labs(title="Views vs Likes of Trending Videos \n r=0.86, p-value<2.2e-16 → Strong Certainty in the relationship", x ="Number of Likes", y = "Number of Views")
+ggplot(data=df_numeric,aes(x=dislikes,y=view_count))+geom_point()+geom_smooth(formula = y ~ x, method = "lm")+labs(title="Views vs Dislikes of Trending Videos \n r=0.70, p-value<2.2e-16 → Strong Certainty in the relationship", x ="Number of Dislikes", y = "Number of Views")
+ggplot(data=df_numeric,aes(x=dislikes,y=comment_count))+geom_point()+geom_smooth(formula = y ~ x, method = "lm")+labs(title="Views vs Comments of Trending Videos \n r=0.62, p-value<2.2e-16 → Strong Certainty in the relationship", x ="Number of Comments", y = "Number of Views")
