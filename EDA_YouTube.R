@@ -59,3 +59,5 @@ unique(zero_view_videos$video_id)
 #For our analysis purposes, these zero-viewed videos will be excluded 
 df_raw=df_raw%>%filter(view_count!=0)
 
+df_raw_copy=df_raw #saving a copy as backup
+
