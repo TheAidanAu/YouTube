@@ -160,3 +160,22 @@ ggplot(data=df_numeric,aes(x=dislikes,y=comment_count))+geom_point()+geom_smooth
 ##Histogram of number of days trended
 ggplot(data=df_unique_video,aes(x=days_from_published_to_trending))+geom_bar(aes(y = (..count..)/sum(..count..)))+scale_y_continuous(labels = scales::percent)+coord_cartesian(xlim = c(0,20))+labs(title="Distribution of Duration of Videos Staying Trending \n How many days have videos stayed on the Trending List?", x ="Number of Consecutive Days Since First Trending", y = "Percentage of All Trending Videos")
 
+df_videos_per_channel=df_raw%>%group_by(channelTitle)%>%distinct(video_id)%>%summarise(num_videos=n())
+View(df_videos_per_channel)
+#This chart below is for pure count, let's normalize it by the total count
+#ggplot(data = df_videos_per_channel, aes(x=num_videos))+geom_histogram()
+#Ryan: Half of all creators on the list only had one video make it in the 280 days covered by the data. Very few creators made the list more than 10 times in the 280 days covered.
+ggplot(data = df_videos_per_channel, aes(x = num_videos))+geom_bar(aes(y = (..count..)/sum(..count..)))+scale_y_continuous(labels = scales::percent)+coord_cartesian(xlim = c(0,50))+ggtitle("Distribution of Videos Per Creator")+labs(title="Distrubtion of the Number of Trending Videos from the Same Creators \n How many trending videos do the same creators usually have?", x ="Number of Trending Videos from the Same Creators", y = "Percentage of Creators")
+
+ggplot(data = df_unique_video, aes(x = categoryName))+geom_bar(aes(y = (..count..)/sum(..count..)))+scale_y_continuous(labels = scales::percent)+coord_flip()+labs(title="Trending Videos by Categories", x ="Categories", y = "Percentage of Trending Videos")
+ggplot(data = df_unique_video, aes(x = categoryName, y = view_count/1000000))+geom_boxplot()+coord_flip(ylim=c(0,5))+labs(title="View Counts by Categories", x ="Categories", y = "View Counts (in Millions)")
+ggplot(data = df_unique_video, aes(x = categoryName, y = likes/1000000))+geom_boxplot()+coord_flip(ylim=c(0,0.4))+labs(title="Number of Likes by Categories", x ="Categories", y = "Number of Likes (in Millions)")
+ggplot(data = df_unique_video, aes(x = categoryName, y = dislikes))+geom_boxplot()+coord_flip(ylim=c(0,5000))+labs(title="Number of Dislikes by Categories", x ="Categories", y = "Number of Dislikes")
+ggplot(data = df_unique_video, aes(x = categoryName, y = comment_count))+coord_flip()+geom_boxplot()+coord_flip(ylim=c(0,20000))+labs(title="Number of Comments by Categories", x ="Categories", y = "Number of Comments")
+ggplot(data = df_unique_video, aes(x = categoryName, y = days_from_published_to_trending))+geom_boxplot()+coord_flip()
+
+View(df_raw)
+View(df_unique_video)
+
+#Pareto Chart of Views vs Videos
+View(df_unique_video%>%arrange(desc(view_count)))
