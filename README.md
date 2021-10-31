@@ -1,4 +1,5 @@
-# YouTube
+# Ways To Get More Views On YouTube And Make Your Videos Trending 📈
+## (Subheading: How Can YouTube Increase Revenue Without Showing Ads on Every Video?) 
 
 Please download the follow 2 CSV files for the R file to read 
 https://drive.google.com/file/d/1Tl4pMqXMezGJjh8Az7V6gG9hdFcXoc4B/view?usp=sharing
